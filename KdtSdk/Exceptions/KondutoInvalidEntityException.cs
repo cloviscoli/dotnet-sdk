@@ -1,5 +1,4 @@
-﻿using System;
-using KdtSdk.Models;
+﻿using KdtSdk.Models;
 
 namespace KdtSdk.Exceptions
 {
@@ -9,6 +8,6 @@ namespace KdtSdk.Exceptions
     public class KondutoInvalidEntityException : KondutoException 
     {
 	    public KondutoInvalidEntityException(KondutoModel entity)
-            : base(String.Format("{0} is invalid: {1}", entity.ToString(), entity.GetError())) { }
+            : base($"{entity} is invalid: {entity.GetError()}") { }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace KdtSdk.Exceptions
+﻿namespace KdtSdk.Exceptions
 {
     /// <summary>
     /// This exception is thrown whenever Konduto's API responds something we cannot handle.
@@ -8,7 +6,7 @@ namespace KdtSdk.Exceptions
     /// </summary>
     public class KondutoUnexpectedAPIResponseException : KondutoException 
     {
-        public KondutoUnexpectedAPIResponseException(String responseBody)
-            : base(String.Format("Unexpected API response: {0}", responseBody)) { }
+        public KondutoUnexpectedAPIResponseException(string responseBody)
+            : base($"Unexpected API response: {responseBody}") { }
     }
 }

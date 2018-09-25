@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace KdtSdk.Models
 {
@@ -10,7 +7,7 @@ namespace KdtSdk.Models
     {
         //Expiration date. YYYY-MM-DD
         [JsonProperty("expiration_date")]
-        public String ExpirationDate { get; set; }
+        public string ExpirationDate { get; set; }
 
         public KondutoBoletoPayment()
         : base(KondutoPaymentType.boleto){ }
@@ -19,9 +16,9 @@ namespace KdtSdk.Models
             if (this == o) return true;
 		    if (!(o is KondutoBoletoPayment)) return false;
 
-            KondutoBoletoPayment that = o as KondutoBoletoPayment;
+            var that = o as KondutoBoletoPayment;
 
-            if (!object.Equals(ExpirationDate, that.ExpirationDate)) return false;
+            if (!Equals(ExpirationDate, that.ExpirationDate)) return false;
 
 		    return true;
         }

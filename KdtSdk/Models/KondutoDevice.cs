@@ -28,23 +28,23 @@ namespace KdtSdk.Models
 
 	    public KondutoDevice(){}
 
-	    public override bool Equals(Object o) 
+	    public override bool Equals(object o) 
         {
 		    if (this == o) return true;
 		    if (!(o is KondutoDevice)) return false;
 
-            KondutoDevice that = o as KondutoDevice;
+            var that = o as KondutoDevice;
 
-            if (!object.Equals(Cookie, that.Cookie)) return false;
-            if (!object.Equals(Flash, that.Flash)) return false;
-            if (!object.Equals(Javascript, that.Javascript)) return false;
-            if (!object.Equals(Browser, that.Browser)) return false;
-            if (!object.Equals(Fingerprint, that.Fingerprint)) return false;
-            if (!object.Equals(Ip, that.Ip)) return false;
-            if (!object.Equals(Language, that.Language)) return false;
-            if (!object.Equals(Platform, that.Platform)) return false;
-            if (!object.Equals(Timezone, that.Timezone)) return false;
-            if (!object.Equals(UserId, that.UserId)) return false;
+            if (!Equals(Cookie, that.Cookie)) return false;
+            if (!Equals(Flash, that.Flash)) return false;
+            if (!Equals(Javascript, that.Javascript)) return false;
+            if (!Equals(Browser, that.Browser)) return false;
+            if (!Equals(Fingerprint, that.Fingerprint)) return false;
+            if (!Equals(Ip, that.Ip)) return false;
+            if (!Equals(Language, that.Language)) return false;
+            if (!Equals(Platform, that.Platform)) return false;
+            if (!Equals(Timezone, that.Timezone)) return false;
+            if (!Equals(UserId, that.UserId)) return false;
 
 		    return true;
 	    }

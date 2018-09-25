@@ -31,17 +31,17 @@ namespace KdtSdk.Models
             if (this == o) return true;
             if (!(o is KondutoTravelInformation)) return false;
 
-            KondutoTravelInformation that = o as KondutoTravelInformation;
+            var that = o as KondutoTravelInformation;
 
             // required
-            if (!object.Equals(OriginAirport, that.OriginAirport)) return false;
-            if (!object.Equals(DestinationAirport, that.DestinationAirport)) return false;
-            if (!object.Equals(OriginCity, that.OriginCity)) return false;
-            if (!object.Equals(DestinationCity, that.DestinationCity)) return false;
-            if (!object.Equals(Date, that.Date)) return false;
-            if (!object.Equals(NumberOfConnections, that.NumberOfConnections)) return false;
-            if (!object.Equals(Class, that.Class)) return false;
-            if (!object.Equals(FareBasis, that.FareBasis)) return false;
+            if (!Equals(OriginAirport, that.OriginAirport)) return false;
+            if (!Equals(DestinationAirport, that.DestinationAirport)) return false;
+            if (!Equals(OriginCity, that.OriginCity)) return false;
+            if (!Equals(DestinationCity, that.DestinationCity)) return false;
+            if (!Equals(Date, that.Date)) return false;
+            if (!Equals(NumberOfConnections, that.NumberOfConnections)) return false;
+            if (!Equals(Class, that.Class)) return false;
+            if (!Equals(FareBasis, that.FareBasis)) return false;
 
             return true;
         }

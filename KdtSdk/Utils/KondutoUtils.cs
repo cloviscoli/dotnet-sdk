@@ -4,8 +4,6 @@ using Newtonsoft.Json.Linq;
 using System;
 
 
-using Newtonsoft.Json.Converters;
-
 namespace KdtSdk.Utils
 {
     public class KondutoUtils
@@ -15,9 +13,9 @@ namespace KdtSdk.Utils
             return JsonConvert.DeserializeObject<T>(json, new PaymentConverter());
         }
 
-        public static String GetFirstJArrayElement(String json)
+        public static string GetFirstJArrayElement(string json)
         {
-            JArray a = JArray.Parse(json);
+            var a = JArray.Parse(json);
             return a.First.ToString();
         }
 
@@ -91,10 +89,10 @@ namespace KdtSdk.Utils
                                          JsonSerializer serializer)
         {
             // Load JObject from stream
-            JObject jObject = JObject.Load(reader);
+            var jObject = JObject.Load(reader);
 
             // Create target object based on JObject
-            T target = Create(objectType, jObject);
+            var target = Create(objectType, jObject);
 
             // Populate the object properties
             serializer.Populate(jObject.CreateReader(), target);

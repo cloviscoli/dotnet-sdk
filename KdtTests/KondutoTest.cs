@@ -103,7 +103,7 @@ namespace KdtTests
             var c = kdt.KondutoGetOrderUrl(ORDER_ID);
 
             fakeResponseHandler.AddFakeResponse(kdt.KondutoGetOrderUrl(ORDER_ID), message);
-            kdt.__MessageHandler = fakeResponseHandler;
+            kdt.MessageHandler = fakeResponseHandler;
 
             var v = kdt.GetOrder(ORDER_ID);
 
@@ -123,7 +123,7 @@ namespace KdtTests
                     message.Content = new StringContent(ORDER_FROM_FILE.ToJson());
 
                     fakeResponseHandler.AddFakeResponse(konduto.KondutoGetOrderUrl(ORDER_ID), message);
-                    konduto.__MessageHandler = fakeResponseHandler;
+                    konduto.MessageHandler = fakeResponseHandler;
 
                     konduto.GetOrder(ORDER_ID);
                     Assert.Fail("Exception expected");
@@ -148,7 +148,7 @@ namespace KdtTests
             message.Content = new StringContent(ANALYZE_ORDER_RESPONSE.ToString());
 
             fakeResponseHandler.AddFakeResponse(konduto.KondutoPostOrderUrl(), message);
-            konduto.__MessageHandler = fakeResponseHandler;
+            konduto.MessageHandler = fakeResponseHandler;
 
             KondutoOrder orderToSend = KondutoOrderFactory.basicOrder();
             String s = orderToSend.ToJson();
@@ -498,7 +498,7 @@ namespace KdtTests
             message.Content = new StringContent(NOT_ANALYZE_ORDER_RESPONSE.ToString());
 
             fakeResponseHandler.AddFakeResponse(konduto.KondutoPostOrderUrl(), message);
-            konduto.__MessageHandler = fakeResponseHandler;
+            konduto.MessageHandler = fakeResponseHandler;
 
             KondutoOrder orderToSend = KondutoOrderFactory.basicOrder();
             orderToSend.Analyze = false;
@@ -535,7 +535,7 @@ namespace KdtTests
             message.Content = new StringContent(ORDER_FROM_FILE.ToJson());
 
             fakeResponseHandler.AddFakeResponse(konduto.KondutoPostOrderUrl(), message);
-            konduto.__MessageHandler = fakeResponseHandler;
+            konduto.MessageHandler = fakeResponseHandler;
 
             KondutoOrder orderToSend = new KondutoOrder();
 
@@ -571,7 +571,7 @@ namespace KdtTests
                     message.Content = new StringContent(ORDER_FROM_FILE.ToJson());
 
                     fakeResponseHandler.AddFakeResponse(konduto.KondutoPostOrderUrl(), message);
-                    konduto.__MessageHandler = fakeResponseHandler;
+                    konduto.MessageHandler = fakeResponseHandler;
 
                     konduto.Analyze(KondutoOrderFactory.basicOrder());
                     Assert.Fail("Exception expected");
@@ -595,7 +595,7 @@ namespace KdtTests
             message.Content = new StringContent("{\"old_status\":\"review\",\"new_status\":\"approved\"}");
 
             fakeResponseHandler.AddFakeResponse(konduto.KondutoPutOrderUrl(ORDER_ID), message);
-            konduto.__MessageHandler = fakeResponseHandler;
+            konduto.MessageHandler = fakeResponseHandler;
 
             try
             {
@@ -624,7 +624,7 @@ namespace KdtTests
                     message.Content = new StringContent("{}");
 
                     fakeResponseHandler.AddFakeResponse(konduto.KondutoPutOrderUrl(ORDER_ID), message);
-                    konduto.__MessageHandler = fakeResponseHandler;
+                    konduto.MessageHandler = fakeResponseHandler;
 
                     konduto.Analyze(KondutoOrderFactory.basicOrder());
                     Assert.Fail("Exception expected");

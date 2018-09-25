@@ -56,23 +56,23 @@ namespace KdtSdk.Models
 		    if (this == o) return true;
 		    if (!(o is KondutoNavigationInfo)) return false;
 
-            KondutoNavigationInfo that = o as KondutoNavigationInfo;
+            var that = o as KondutoNavigationInfo;
 
-            if (!object.Equals(AccountsCreatedSinceLastWeek, that.AccountsCreatedSinceLastWeek)) return false;
-            if (!object.Equals(AccountsCreatedToday, that.AccountsCreatedToday)) return false;
-            if (!object.Equals(CheckoutPageViewsSinceLastWeek, that.CheckoutPageViewsSinceLastWeek)) return false;
-            if (!object.Equals(PasswordResetsSinceLastWeek, that.PasswordResetsSinceLastWeek)) return false;
-            if (!object.Equals(PasswordResetsToday, that.PasswordResetsToday)) return false;
-            if (!object.Equals(Referrer, that.Referrer)) return false;
-            if (!object.Equals(SalesDeclinedSinceLastWeek, that.SalesDeclinedSinceLastWeek)) return false;
-            if (!object.Equals(SalesDeclinedToday, that.SalesDeclinedToday)) return false;
-            if (!object.Equals(SessionTime, that.SessionTime)) return false;
-            if (!object.Equals(SessionsSinceLastWeek, that.SessionsSinceLastWeek)) return false;
-            if (!object.Equals(SessionsToday, that.SessionsToday)) return false;
-            if (!object.Equals(TimeOnSiteSinceLastWeek, that.TimeOnSiteSinceLastWeek)) return false;
-            if (!object.Equals(TimeOnSiteToday, that.TimeOnSiteToday)) return false;
-            if (!object.Equals(TimePerPageSinceLastWeek, that.TimePerPageSinceLastWeek)) return false;
-            if (!object.Equals(TimeSinceLastSale, that.TimeSinceLastSale)) return false;
+            if (!Equals(AccountsCreatedSinceLastWeek, that.AccountsCreatedSinceLastWeek)) return false;
+            if (!Equals(AccountsCreatedToday, that.AccountsCreatedToday)) return false;
+            if (!Equals(CheckoutPageViewsSinceLastWeek, that.CheckoutPageViewsSinceLastWeek)) return false;
+            if (!Equals(PasswordResetsSinceLastWeek, that.PasswordResetsSinceLastWeek)) return false;
+            if (!Equals(PasswordResetsToday, that.PasswordResetsToday)) return false;
+            if (!Equals(Referrer, that.Referrer)) return false;
+            if (!Equals(SalesDeclinedSinceLastWeek, that.SalesDeclinedSinceLastWeek)) return false;
+            if (!Equals(SalesDeclinedToday, that.SalesDeclinedToday)) return false;
+            if (!Equals(SessionTime, that.SessionTime)) return false;
+            if (!Equals(SessionsSinceLastWeek, that.SessionsSinceLastWeek)) return false;
+            if (!Equals(SessionsToday, that.SessionsToday)) return false;
+            if (!Equals(TimeOnSiteSinceLastWeek, that.TimeOnSiteSinceLastWeek)) return false;
+            if (!Equals(TimeOnSiteToday, that.TimeOnSiteToday)) return false;
+            if (!Equals(TimePerPageSinceLastWeek, that.TimePerPageSinceLastWeek)) return false;
+            if (!Equals(TimeSinceLastSale, that.TimeSinceLastSale)) return false;
 
 		    return true;
 	    }

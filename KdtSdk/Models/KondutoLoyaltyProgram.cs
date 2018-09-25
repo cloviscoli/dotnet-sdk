@@ -18,10 +18,10 @@ namespace KdtSdk.Models
             if (this == o) return true;
             if (!(o is KondutoLoyaltyProgram)) return false;
 
-            KondutoLoyaltyProgram that = o as KondutoLoyaltyProgram;
+            var that = o as KondutoLoyaltyProgram;
 
-            if (!object.Equals(Program, that.Program)) return false;
-            if (!object.Equals(Category, that.Category)) return false;
+            if (!Equals(Program, that.Program)) return false;
+            if (!Equals(Category, that.Category)) return false;
 
             return true;
         }

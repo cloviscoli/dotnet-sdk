@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 
 namespace KdtSdk.Models
 {
@@ -11,7 +7,7 @@ namespace KdtSdk.Models
         public KondutoDebitPayment()
             : base(KondutoPaymentType.debit) { }
 
-        public override bool Equals(Object o)
+        public override bool Equals(object o)
         {
             if (this == o) return true;
             if (!(o is KondutoDebitPayment)) return false;

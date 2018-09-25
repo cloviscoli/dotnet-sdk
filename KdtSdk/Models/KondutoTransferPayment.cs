@@ -1,17 +1,11 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace KdtSdk.Models
+﻿namespace KdtSdk.Models
 {
     public class KondutoTransferPayment : KondutoPayment
     {
         public KondutoTransferPayment()
             : base(KondutoPaymentType.transfer) { }
 
-        public override bool Equals(Object o)
+        public override bool Equals(object o)
         {
             if (this == o) return true;
             if (!(o is KondutoTransferPayment)) return false;

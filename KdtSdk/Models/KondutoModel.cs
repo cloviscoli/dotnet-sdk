@@ -7,16 +7,16 @@ namespace KdtSdk.Models
 {
     public class KondutoModel
     {
-        private String error = null;
+        private string _error;
 
-        public String GetError()
+        public string GetError()
         {
-            return error;
+            return _error;
         }
 
         public String ToJson()
         {
-            JsonSerializerSettings s = new JsonSerializerSettings();
+            var s = new JsonSerializerSettings();
             s.MissingMemberHandling = MissingMemberHandling.Ignore;
             s.NullValueHandling = NullValueHandling.Ignore;
             s.MissingMemberHandling = MissingMemberHandling.Ignore;
@@ -37,7 +37,7 @@ namespace KdtSdk.Models
             }
         }
 
-        public static T FromJson<T>(String jsonObject)
+        public static T FromJson<T>(string jsonObject)
         {
             return JsonConvert.DeserializeObject<T>(jsonObject, new KondutoUtils.PaymentConverter());
         }
@@ -48,7 +48,7 @@ namespace KdtSdk.Models
         /// <returns>whether this KondutoModel instance is valid or not.</returns>
         public bool IsValid()
         {
-            error = null;
+            _error = null;
 
             try
             {
@@ -56,7 +56,7 @@ namespace KdtSdk.Models
             }
             catch (Exception e)
             {
-                this.error = e.Message;
+                _error = e.Message;
                 return false;
             }
             

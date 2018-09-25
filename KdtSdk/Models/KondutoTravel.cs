@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using System.ComponentModel;
 using Newtonsoft.Json.Converters;
 
 
@@ -29,22 +27,17 @@ namespace KdtSdk.Models
 
         #endregion
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public KondutoTravel() { }
-
-        public override bool Equals(Object o)
+        public override bool Equals(object o)
         {
             if (this == o) return true;
 
             if (!(o is KondutoTravel)) return false;
 
-            KondutoTravel that = o as KondutoTravel;
+            var that = o as KondutoTravel;
 
-            if (!Passengers.SequenceEqual<KondutoPassenger>(that.Passengers)) return false;
-            if (!object.Equals(Departure, that.Departure)) return false;
-            if (!object.Equals(Return, that.Return)) return false;
+            if (!Passengers.SequenceEqual(that.Passengers)) return false;
+            if (!Equals(Departure, that.Departure)) return false;
+            if (!Equals(Return, that.Return)) return false;
 
             return true;
         }

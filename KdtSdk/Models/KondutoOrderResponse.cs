@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 
 namespace KdtSdk.Models
 {
@@ -47,18 +44,18 @@ namespace KdtSdk.Models
             if (this == o) return true;
 		    if (!(o is KondutoOrder)) return false;
 
-            KondutoOrder that = o as KondutoOrder;
+            var that = o as KondutoOrder;
 
-            if (!object.Equals(Id, that.Id)) return false;
-            if (!object.Equals(Recommendation, that.Recommendation)) return false;
-            if (!object.Equals(Score, that.Score)) return false;
+            if (!Equals(Id, that.Id)) return false;
+            if (!Equals(Recommendation, that.Recommendation)) return false;
+            if (!Equals(Score, that.Score)) return false;
 
-            if (!object.Equals(Visitor, that.Visitor)) return false;
-            if (!object.Equals(Geolocation, that.Geolocation)) return false;
-            if (!object.Equals(Timestamp, that.Timestamp)) return false;
+            if (!Equals(Visitor, that.Visitor)) return false;
+            if (!Equals(Geolocation, that.Geolocation)) return false;
+            if (!Equals(Timestamp, that.Timestamp)) return false;
 
-            if (!object.Equals(Device, that.Device)) return false;
-            if (!object.Equals(NavigationInfo, that.NavigationInfo)) return false;
+            if (!Equals(Device, that.Device)) return false;
+            if (!Equals(NavigationInfo, that.NavigationInfo)) return false;
 
             return true;
         }

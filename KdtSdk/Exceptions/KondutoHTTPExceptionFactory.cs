@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 
 namespace KdtSdk.Exceptions
 {
@@ -10,14 +9,14 @@ namespace KdtSdk.Exceptions
     public class KondutoHTTPExceptionFactory
     {
         
-	    private static String responseBody;
+	    private static string responseBody;
 
 	    /// <summary>
 	    /// </summary>
 	    /// <param name="statusCode">the HTTP status code answered by Konduto's API.</param>
 	    /// <param name="responseBody">the response body.</param>
 	    /// <returns>an exception corresponding to the HTTP status code.</returns>
-	    public static KondutoHTTPException buildException(int statusCode, String responseBody) 
+	    public static KondutoHTTPException buildException(int statusCode, string responseBody) 
         {
             KondutoHTTPExceptionFactory.responseBody = responseBody;
 		    

@@ -1,35 +1,34 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace KdtSdk.Models
 {
     public class KondutoSeller : KondutoModel
     {
         [JsonProperty("id")]
-        public String Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("name")]
-        public String Name { get; set; }
+        public string Name { get; set; }
         
         /// <summary>
         /// YYYY-MM-DD
         /// </summary>
         [JsonProperty("created_at")]
-        public String CreatedAt { get; set; }
+        public string CreatedAt { get; set; }
 
         /* Constructors */
 
         public KondutoSeller() { }
 
-        public override bool Equals(Object o)
+        public override bool Equals(object o)
         {
             if (this == o) return true;
             if (!(o is KondutoSeller)) return false;
 
-            KondutoSeller that = o as KondutoSeller;
+            var that = o as KondutoSeller;
 
-            if (!object.Equals(Id, that.Id)) return false;
-            if (!object.Equals(Name, that.Name)) return false;
-            if (!object.Equals(CreatedAt, that.CreatedAt)) return false;
+            if (!Equals(Id, that.Id)) return false;
+            if (!Equals(Name, that.Name)) return false;
+            if (!Equals(CreatedAt, that.CreatedAt)) return false;
 
             return true;
         }

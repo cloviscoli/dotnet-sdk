@@ -42,16 +42,16 @@ namespace KdtSdk.Models
             if (this == o) return true;
             if (!(o is KondutoPassenger)) return false;
 
-            KondutoPassenger that = o as KondutoPassenger;
+            var that = o as KondutoPassenger;
 
-            if (!object.Equals(Name, that.Name)) return false;
-            if (!object.Equals(Document, that.Document)) return false;
-            if (!object.Equals(DocumentType, that.DocumentType)) return false;
-            if (!object.Equals(Dob, that.Dob)) return false;
-            if (!object.Equals(Nationality, that.Nationality)) return false;
-            if (!object.Equals(FrequentTraveler, that.FrequentTraveler)) return false;
-            if (!object.Equals(SpecialNeeds, that.SpecialNeeds)) return false;
-            if (!object.Equals(Loyalty, that.Loyalty)) return false;
+            if (!Equals(Name, that.Name)) return false;
+            if (!Equals(Document, that.Document)) return false;
+            if (!Equals(DocumentType, that.DocumentType)) return false;
+            if (!Equals(Dob, that.Dob)) return false;
+            if (!Equals(Nationality, that.Nationality)) return false;
+            if (!Equals(FrequentTraveler, that.FrequentTraveler)) return false;
+            if (!Equals(SpecialNeeds, that.SpecialNeeds)) return false;
+            if (!Equals(Loyalty, that.Loyalty)) return false;
 
             return true;
         }

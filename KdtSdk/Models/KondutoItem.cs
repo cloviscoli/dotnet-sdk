@@ -37,22 +37,22 @@ namespace KdtSdk.Models
 
 	    public KondutoItem(){}
 
-	    public override bool Equals(Object o) 
+	    public override bool Equals(object o) 
         {
 		    if (this == o) return true;
 		    if (!(o is KondutoItem)) return false;
 
-            KondutoItem that = o as KondutoItem;
+            var that = o as KondutoItem;
 
-            if (!object.Equals(Sku, that.Sku)) return false;
-            if (!object.Equals(Category, that.Category)) return false;
-            if (!object.Equals(Name, that.Name)) return false;
-            if (!object.Equals(Description, that.Description)) return false;
-            if (!object.Equals(ProductCode, that.ProductCode)) return false;
-            if (!object.Equals(UnitCost, that.UnitCost)) return false;
-            if (!object.Equals(Quantity, that.Quantity)) return false;
-            if (!object.Equals(Discount, that.Discount)) return false;
-            if (!object.Equals(CreatedAt, that.CreatedAt)) return false;
+            if (!Equals(Sku, that.Sku)) return false;
+            if (!Equals(Category, that.Category)) return false;
+            if (!Equals(Name, that.Name)) return false;
+            if (!Equals(Description, that.Description)) return false;
+            if (!Equals(ProductCode, that.ProductCode)) return false;
+            if (!Equals(UnitCost, that.UnitCost)) return false;
+            if (!Equals(Quantity, that.Quantity)) return false;
+            if (!Equals(Discount, that.Discount)) return false;
+            if (!Equals(CreatedAt, that.CreatedAt)) return false;
 
 		    return true;
 	    }

@@ -33,36 +33,36 @@ namespace KdtSdk.Models
 	    /// </summary>
 	    public KondutoAddress() 
         {
-            this.Name = null;
-            this.Address1 = null;
-            this.Address2 = null;
-            this.Zip = null;
-            this.City = null;
-            this.State = null;
-            this.Country = null;
+            Name = null;
+            Address1 = null;
+            Address2 = null;
+            Zip = null;
+            City = null;
+            State = null;
+            Country = null;
         }
 
-        public KondutoAddress withName(string name)
+        public KondutoAddress WithName(string name)
         {
-            this.Name = name;
+            Name = name;
             return this;
         }
 
-	    public override bool Equals(Object o) {
+	    public override bool Equals(object o) {
 		    if (this == o) return true;
 
 		    if (!(o is KondutoAddress)) return false;
 
-		    KondutoAddress that = o as KondutoAddress;
+		    var that = o as KondutoAddress;
 
-            if (!object.Equals(Address1, that.Address1)) return false;
-            if (!object.Equals(Address2, that.Address2)) return false;
-            if (!object.Equals(City, that.City)) return false;
+            if (!Equals(Address1, that.Address1)) return false;
+            if (!Equals(Address2, that.Address2)) return false;
+            if (!Equals(City, that.City)) return false;
 
-            if (!object.Equals(Country, that.Country)) return false;
-            if (!object.Equals(Name, that.Name)) return false;
-            if (!object.Equals(State, that.State)) return false;
-            if (!object.Equals(Zip, that.Zip)) return false;
+            if (!Equals(Country, that.Country)) return false;
+            if (!Equals(Name, that.Name)) return false;
+            if (!Equals(State, that.State)) return false;
+            if (!Equals(Zip, that.Zip)) return false;
 
 		    return true;
 	    }

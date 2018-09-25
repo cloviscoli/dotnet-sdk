@@ -16,7 +16,7 @@ namespace KdtSdk.Models
 	    /* Constructors */
 	    public KondutoGeolocation() { }
 
-	    public override bool Equals(Object o) 
+	    public override bool Equals(object o) 
         {
 		    if (this == o) return true;
 
@@ -24,9 +24,9 @@ namespace KdtSdk.Models
 
             KondutoGeolocation that = o as KondutoGeolocation;
 
-            if (!object.Equals(City, that.City)) return false;
-            if (!object.Equals(Country, that.Country)) return false;
-            if (!object.Equals(State, that.State)) return false;
+            if (!Equals(City, that.City)) return false;
+            if (!Equals(Country, that.Country)) return false;
+            if (!Equals(State, that.State)) return false;
 
 		    return true;
 	    }

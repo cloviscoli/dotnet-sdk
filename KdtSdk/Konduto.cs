@@ -1,80 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
-using System.Net.Http;
-using KdtSdk.Models;
-using KdtSdk.Exceptions;
-using System.Net.Http.Headers;
-using Newtonsoft.Json.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using KdtSdk.Exceptions;
+using KdtSdk.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace KdtSdk
 {
     /// <summary>
-    /// Konduto is an HTTP Client for connecting to Konduto's API.
+    ///     Konduto is an HTTP Client for connecting to Konduto's API.
     /// </summary>
     public class Konduto
     {
-        public const String VERSION = "1.0.9";
+        public const string Version = "1.0.9";
 
-        private String apiKey;
-        private String requestBody;
-        private String responseBody;
-        private Uri endpoint;
+        public HttpMessageHandler MessageHandler = null;
 
-        public HttpMessageHandler __MessageHandler = null;
+        private string _apiKey;
+        private Uri _endpoint;
+        private string _proxyAddress;
+        private string _proxyPassword;
+        private string _proxyUsername;
+        private string _requestBody;
+        private string _responseBody;
 
-        private bool useProxy = false;
-        private String proxyAddress;
-        private String proxyUsername;
-        private String proxyPassword;
+        private bool _useProxy;
 
-        public Konduto(String apiKey)
+        public Konduto(string apiKey)
         {
             SetApiKey(apiKey);
-            endpoint = new Uri("https://api.konduto.com/v1/");
+            _endpoint = new Uri("https://api.konduto.com/v1/");
         }
 
         /// <summary>
-        /// Konduto's API endpoint (default is https://api.konduto.com/v1/)
+        ///     Konduto's API endpoint (default is https://api.konduto.com/v1/)
         /// </summary>
         /// <param name="endpoint"></param>
         public void SetEndpoint(Uri endpoint)
         {
-            this.endpoint = endpoint;
+            _endpoint = endpoint;
         }
 
         /// <summary>
-        /// sets the merchant secret API key, which is required for Konduto's API authentication.
+        ///     sets the merchant secret API key, which is required for Konduto's API authentication.
         /// </summary>
         /// <param name="apiKey"></param>
-        public void SetApiKey(String apiKey)
+        public void SetApiKey(string apiKey)
         {
             if (apiKey == null || apiKey.Length != 21)
-            {
                 throw new ArgumentOutOfRangeException("Illegal API Key: " + apiKey);
-            }
-            this.apiKey = apiKey;
+            _apiKey = apiKey;
         }
 
         /// <summary>
-        /// Helper method to debug requests made to Konduto's API.
+        ///     Helper method to debug requests made to Konduto's API.
         /// </summary>
         /// <returns>a String containing API Key, Konduto's API endpoint, request and response bodies.</returns>
-        public String Debug()
+        public string Debug()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(String.Format("API Key: {0}\n", this.apiKey));
-            sb.Append(String.Format("Endpoint: {0}\n", this.endpoint.ToString()));
-            if (this.requestBody != null)
-            {
-                sb.Append(String.Format("Request body: {0}\n", this.requestBody));
-            }
-            if (this.responseBody != null)
-            {
-                sb.Append(String.Format("Response body: {0}\n", this.responseBody));
-            }
+            var sb = new StringBuilder();
+            sb.Append($"API Key: {_apiKey}\n");
+            sb.Append($"Endpoint: {_endpoint}\n");
+            if (_requestBody != null) sb.Append($"Request body: {_requestBody}\n");
+            if (_responseBody != null) sb.Append($"Response body: {_responseBody}\n");
             return sb.ToString();
         }
 
@@ -82,34 +74,34 @@ namespace KdtSdk
         /// </summary>
         /// <param name="orderId">the order identifier</param>
         /// <returns>[GET] order URI (ENDPOINT/orders/orderId)</returns>
-        public Uri KondutoGetOrderUrl(String orderId)
+        public Uri KondutoGetOrderUrl(string orderId)
         {
-            return new Uri(endpoint.ToString() + KondutoGetOrderSuffix(orderId));
+            return new Uri(_endpoint + KondutoGetOrderSuffix(orderId));
         }
 
         /// <summary>
         /// </summary>
         /// <param name="orderId">the order identifier</param>
         /// <returns>/orders/orderId</returns>
-        public String KondutoGetOrderSuffix(String orderId)
+        public string KondutoGetOrderSuffix(string orderId)
         {
             return "orders/" + orderId;
         }
 
         /// <summary>
-        /// [POST] order URI (ENDPOINT/orders)
+        ///     [POST] order URI (ENDPOINT/orders)
         /// </summary>
         /// <returns></returns>
         public Uri KondutoPostOrderUrl()
         {
-            return new Uri(endpoint.ToString() + KondutoPostOrderUrlSuffix());
+            return new Uri(_endpoint + KondutoPostOrderUrlSuffix());
         }
 
         /// <summary>
-        /// [POST] order suffix (/orders)
+        ///     [POST] order suffix (/orders)
         /// </summary>
         /// <returns></returns>
-        public String KondutoPostOrderUrlSuffix()
+        public string KondutoPostOrderUrlSuffix()
         {
             return "orders";
         }
@@ -118,53 +110,54 @@ namespace KdtSdk
         /// </summary>
         /// <param name="orderId">the order identifier</param>
         /// <returns>[PUT] order URI (ENDPOINT/orders/orderId)</returns>
-        public Uri KondutoPutOrderUrl(String orderId)
+        public Uri KondutoPutOrderUrl(string orderId)
         {
-            return new Uri(endpoint.ToString() + KondutoPutOrderUrlSuffix(orderId));
+            return new Uri(_endpoint + KondutoPutOrderUrlSuffix(orderId));
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns>/orders/orderId</returns>
-        public String KondutoPutOrderUrlSuffix(String orderId)
+        public string KondutoPutOrderUrlSuffix(string orderId)
         {
             return "orders/" + orderId;
         }
 
         /// <summary>
-        /// Set proxy address, send only the address with http://ip, even for https connections
+        ///     Set proxy address, send only the address with http://ip, even for https connections
         /// </summary>
         /// <param name="proxyAddress">Proxy address, even for https connections, use http</param>
-        public void SetProxy(String proxyAddress, String proxyUser, String proxyPassword)
+        /// <param name="proxyUser"></param>
+        /// <param name="proxyPassword"></param>
+        public void SetProxy(string proxyAddress, string proxyUser, string proxyPassword)
         {
-            this.proxyUsername = proxyUser;
-            this.proxyPassword = proxyPassword;
-            this.proxyAddress = proxyAddress;
-            this.useProxy = true;
+            _proxyUsername = proxyUser;
+            _proxyPassword = proxyPassword;
+            _proxyAddress = proxyAddress;
+            _useProxy = true;
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <returns></returns>
         private HttpClient CreateHttpClient()
         {
-            String base64 = Base64Encode(apiKey);
-            
+            var base64 = Base64Encode(_apiKey);
+
             HttpClient httpClient;
 
-            if (!this.useProxy)
+            if (!_useProxy)
             {
-                httpClient = __MessageHandler == null ? new HttpClient() : new HttpClient(__MessageHandler);
+                httpClient = MessageHandler == null ? new HttpClient() : new HttpClient(MessageHandler);
             }
             else
             {
                 var httpClientHandler = new HttpClientHandler
                 {
                     UseDefaultCredentials = false,
-                    Proxy = new WebProxy(this.proxyAddress, false, null, new NetworkCredential(this.proxyUsername, this.proxyPassword)),
+                    Proxy =
+                        new WebProxy(_proxyAddress, false, null, new NetworkCredential(_proxyUsername, _proxyPassword)),
                     UseProxy = true
                 };
 
@@ -174,57 +167,54 @@ namespace KdtSdk
 
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + base64);
-            httpClient.DefaultRequestHeaders.Add("X-Requested-With", "Konduto SDK .NET " + VERSION);
-            httpClient.BaseAddress = this.endpoint;
+            httpClient.DefaultRequestHeaders.Add("X-Requested-With", "Konduto SDK .NET " + Version);
+            httpClient.BaseAddress = _endpoint;
 
             return httpClient;
         }
 
         /// <summary>
-        /// Queries an order from Konduto's API.
-        /// Syncronous
-        /// @see <a href="http://docs.konduto.com">Konduto API Spec</a>
+        ///     Queries an order from Konduto's API.
+        ///     Syncronous
+        ///     @see <a href="http://docs.konduto.com">Konduto API Spec</a>
         /// </summary>
         /// <param name="orderId">the order identifier</param>
         /// <returns>a {@link KondutoOrder} instance</returns>
         /// <exception cref="KondutoHTTPException"></exception>
         /// <exception cref="KondutoUnexpectedAPIResponseException"></exception>
-        public KondutoOrder GetOrder(String orderId)
+        public KondutoOrder GetOrder(string orderId)
         {
-            HttpClient client = CreateHttpClient();
+            var client = CreateHttpClient();
 
-            this.requestBody = orderId;
+            _requestBody = orderId;
 
             var response = client.GetAsync(KondutoGetOrderSuffix(orderId)).Result;
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = response.Content;
 
-                String responseString = responseContent.ReadAsStringAsync().Result;
-                this.responseBody = responseString;
+                var responseString = responseContent.ReadAsStringAsync().Result;
+                _responseBody = responseString;
 
-                JObject getResponse = JsonConvert.DeserializeObject<JObject>(responseString);
+                var getResponse = JsonConvert.DeserializeObject<JObject>(responseString);
 
                 KondutoOrder order = null;
 
                 JToken jt;
                 if (getResponse.TryGetValue("order", out jt))
-                {
                     order = KondutoModel.FromJson<KondutoOrder>(jt.ToString());
-                }
 
                 return order;
             }
-            else
-            {
-                throw KondutoHTTPExceptionFactory.buildException((int)response.StatusCode, response.Content.ReadAsStringAsync().Result);
-            }
+
+            throw KondutoHTTPExceptionFactory.buildException((int) response.StatusCode,
+                response.Content.ReadAsStringAsync().Result);
         }
 
         /// <summary>
-        /// Sends an order for Konduto and gets it analyzed
-        /// (i.e with recommendation, score, device, geolocation and navigation info).
-        /// @see <a href="http://docs.konduto.com">Konduto API Spec</a>
+        ///     Sends an order for Konduto and gets it analyzed
+        ///     (i.e with recommendation, score, device, geolocation and navigation info).
+        ///     @see <a href="http://docs.konduto.com">Konduto API Spec</a>
         /// </summary>
         /// <param name="order">a {@link KondutoOrder} instance</param>
         /// <exception cref="KondutoInvalidEntityException"></exception>
@@ -232,14 +222,14 @@ namespace KdtSdk
         /// <exception cref="KondutoUnexpectedAPIResponseException"></exception>
         public KondutoOrder Analyze(KondutoOrder order)
         {
-            HttpClient httpClient = CreateHttpClient();
-            
+            var httpClient = CreateHttpClient();
+
             var response = httpClient.PostAsync(KondutoPostOrderUrl(),
                 new StringContent(order.ToJson(),
                     Encoding.UTF8,
                     "application/json"));
 
-            this.requestBody = order.ToJson();
+            _requestBody = order.ToJson();
 
             if (response.Result.IsSuccessStatusCode)
             {
@@ -247,43 +237,39 @@ namespace KdtSdk
                 var responseContent = response.Result.Content;
 
                 // by calling. Result you are synchronously reading the result
-                String responseString = responseContent.ReadAsStringAsync().Result;
+                var responseString = responseContent.ReadAsStringAsync().Result;
 
-                this.responseBody = responseString;
+                _responseBody = responseString;
 
                 if (order.Analyze)
-                    order.MergeKondutoOrderResponse(KondutoAPIFullResponse.FromJson<KondutoAPIFullResponse>(responseString).Order);
+                    order.MergeKondutoOrderResponse(KondutoModel.FromJson<KondutoAPIFullResponse>(responseString)
+                        .Order);
 
                 return order;
             }
-            else
-            {
-                var responseContentError = response.Result.Content != null ? response.Result.Content.ReadAsStringAsync().Result : "Error with response";
-                throw KondutoHTTPExceptionFactory.buildException((int)response.Result.StatusCode,
-                    responseContentError);
-            }
-        }
 
-        private class KondutoAPIFullResponse : KondutoModel
-        {
-            [JsonProperty("status")]
-            public string Status { get; set; }
-            [JsonProperty("order")]
-            public KondutoOrderResponse Order { get; set; }
+            var responseContentError = response.Result.Content != null
+                ? response.Result.Content.ReadAsStringAsync().Result
+                : "Error with response";
+            throw KondutoHTTPExceptionFactory.buildException((int) response.Result.StatusCode,
+                responseContentError);
         }
 
         /// <summary>
-        /// Updates an order status.
-        /// @see <a href="http://docs.konduto.com">Konduto API Spec</a>
+        ///     Updates an order status.
+        ///     @see <a href="http://docs.konduto.com">Konduto API Spec</a>
         /// </summary>
-        /// <param name="order">the order to update</param>
+        /// <param name="orderId">the order to update</param>
         /// <param name="newStatus">the new status (APPROVED, DECLINED or FRAUD)</param>
-        /// <param name="comments">some comments (an empty String is accepted, although we recommend setting it to at least a timestamp)</param>
+        /// <param name="comments">
+        ///     some comments (an empty String is accepted, although we recommend setting it to at least a
+        ///     timestamp)
+        /// </param>
         /// <exception cref="KondutoHTTPException"></exception>
         /// <exception cref="KondutoUnexpectedAPIResponseException"></exception>
-        public void UpdateOrderStatus(String orderId, KondutoOrderStatus newStatus, String comments)
+        public void UpdateOrderStatus(string orderId, KondutoOrderStatus newStatus, string comments)
         {
-            HashSet<KondutoOrderStatus> allowed = new HashSet<KondutoOrderStatus>
+            var allowed = new HashSet<KondutoOrderStatus>
             {
                 KondutoOrderStatus.approved,
                 KondutoOrderStatus.declined,
@@ -292,15 +278,15 @@ namespace KdtSdk
                 KondutoOrderStatus.not_authorized
             };
 
-            if (!allowed.Contains(newStatus)) { throw new ArgumentException("Illegal status: " + newStatus); }
+            if (!allowed.Contains(newStatus)) throw new ArgumentException("Illegal status: " + newStatus);
 
-            if (comments == null) { throw new NullReferenceException("Comments cannot be null."); }
+            if (comments == null) throw new NullReferenceException("Comments cannot be null.");
 
-            JObject requestBody = new JObject();
+            var requestBody = new JObject();
             requestBody.Add("status", newStatus.ToString().ToLower());
             requestBody.Add("comments", comments);
 
-            HttpClient client = CreateHttpClient();
+            var client = CreateHttpClient();
 
             var response = client.PutAsync(KondutoPutOrderUrl(orderId),
                 new StringContent(
@@ -310,53 +296,56 @@ namespace KdtSdk
 
             if (response.Result.IsSuccessStatusCode)
             {
-                JObject responseBody = JsonConvert.DeserializeObject<JObject>(
+                var responseBody = JsonConvert.DeserializeObject<JObject>(
                     response.Result.Content.ReadAsStringAsync().Result);
 
-                this.responseBody = responseBody.ToString();
+                _responseBody = responseBody.ToString();
 
-                JToken orderUpdateResponse;
-
-                if (responseBody.TryGetValue("order", out orderUpdateResponse))
+                if (responseBody.TryGetValue("order", out var orderUpdateResponse))
                 {
-                    JObject updatedOrder = JsonConvert.DeserializeObject<JObject>(orderUpdateResponse.ToString());
+                    var updatedOrder = JsonConvert.DeserializeObject<JObject>(orderUpdateResponse.ToString());
 
-                    JToken statusResponse;
-
-                    if (!updatedOrder.TryGetValue("old_status", out statusResponse) ||
+                    if (!updatedOrder.TryGetValue("old_status", out var statusResponse) ||
                         !updatedOrder.TryGetValue("new_status", out statusResponse))
-                    {
                         throw new KondutoUnexpectedAPIResponseException(responseBody.ToString());
-                    }
                 }
             }
             else
-            { 
-                throw KondutoHTTPExceptionFactory.buildException((int)response.Result.StatusCode,
+            {
+                throw KondutoHTTPExceptionFactory.buildException((int) response.Result.StatusCode,
                     response.Result.Content.ReadAsStringAsync().Result);
             }
         }
 
         /// <summary>
-        /// Base64 Encode
+        ///     Base64 Encode
         /// </summary>
         /// <param name="plainText">Text to encode</param>
         /// <returns></returns>
         public static string Base64Encode(string plainText)
         {
-            byte[] plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
-            return System.Convert.ToBase64String(plainTextBytes);
+            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+            return Convert.ToBase64String(plainTextBytes);
         }
 
         /// <summary>
-        /// Base64 Decode
+        ///     Base64 Decode
         /// </summary>
         /// <param name="base64EncodedData">Text to decode</param>
         /// <returns></returns>
         public static string Base64Decode(string base64EncodedData)
         {
-            byte[] base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
-            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
+            return Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
+        private class KondutoAPIFullResponse : KondutoModel
+        {
+            [JsonProperty("status")]
+            public string Status { get; set; }
+
+            [JsonProperty("order")]
+            public KondutoOrderResponse Order { get; set; }
         }
     }
 }

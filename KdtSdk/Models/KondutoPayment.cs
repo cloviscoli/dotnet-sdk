@@ -12,9 +12,9 @@ namespace KdtSdk.Models
         [JsonProperty("type"), JsonConverter(typeof(StringEnumConverter))]
         public KondutoPaymentType Type { get; set; }
 
-        public KondutoPayment(KondutoPaymentType type)
+        protected KondutoPayment(KondutoPaymentType type)
         {
-            this.Type = type;
+            Type = type;
         }
     }
 }

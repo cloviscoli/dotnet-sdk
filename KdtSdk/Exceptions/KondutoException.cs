@@ -9,8 +9,6 @@ namespace KdtSdk.Exceptions
     /// </summary>
     public class KondutoException : Exception
     {
-        public KondutoException(){}
-
         public KondutoException(string message)
             : base(message){}
 
